@@ -1,0 +1,14 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+    <p>{{ object }} (<a href="/store/products/update/{{ object.pk }}">Edit</a>)</p>
+
+    {% if packages %}
+    <h>Packages:</h>
+    <ul>
+    {% for package in packages %}
+        <li>[{{ package.barcode }}] {{ package.quantity_str }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

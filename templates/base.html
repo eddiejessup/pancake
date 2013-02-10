@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ STATIC_URL }}base.css" />
+    <title>{% block title %}Pantry{% endblock %}</title>
+</head>
+
+<body>
+    <div id="sidebar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/store">Store</a></li>
+            <ul>
+                <li><a href="/store/stocks/">Stocks</a></li>
+                <ul>
+                    <li><a href="/store/stocks/new">Add</a></li>
+                    <li><a href="/store/stocks/search/barcode/">Search by barcode</a></li>
+                </ul>
+                <li><a href="/store/products/">Products</a></li>
+                <ul>
+                    <li><a href="/store/products/new">Add</a></li>
+                    <li><a href="/store/products/search/barcode/">Search by barcode</a></li>
+                    <li><a href="/store/products/lookup/">Lookup</a></li>
+                </ul>
+            </ul>
+        </ul>
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+        {% include "messages.html" %}
+    </div>
+</body>
+</html>
