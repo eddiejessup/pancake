@@ -1,0 +1,19 @@
+<head>
+    <link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/myform.css'/>
+</head>
+
+<body>
+    <p>
+        <b>Results:</b>
+        <ul>
+            {% if results %}
+                {% for stock in results %}
+                    <li><a href="/stocks/use/{{ stock.id }}/">{{ stock }}</a></li>
+                {% endfor %}
+            {% else %}
+                <li>No results!</li>
+            {% endif %}
+        </ul>
+    </p>
+    {% include "stocks/footer.html" %}
+</body>

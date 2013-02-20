@@ -1,0 +1,13 @@
+<head>
+    <link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/myform.css'/>
+</head>
+
+<body>
+    <form action="/stocks/add_prodpacks/" method="post" >
+        {% csrf_token %}
+        {{ prod_form.as_p }}
+        <table>
+            {{ package_formset }}
+        </table>
+    </form>
+</body>

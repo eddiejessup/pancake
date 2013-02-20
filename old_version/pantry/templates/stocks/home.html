@@ -1,0 +1,27 @@
+<head>
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/myform.css"/>
+</head>
+
+<body>
+    <form action="/stocks/home" method="get">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="operation" value="Search" />
+        <input type="submit" name="operation" value="Lookup" />
+    </form>
+
+    {% if user.is_authenticated %}
+        <p>
+            <b>Stock list:</b>
+            {% if stocks %}
+                {% for stock in stocks %}
+                    <li><a href="/stocks/use/{{ stock.id }}/">{{ stock }}</a></li>
+                {% endfor %}
+            {% else %}
+                Pantry is empty!
+            {% endif %}
+        </p>
+    {% endif %}
+
+    {% include "stocks/footer.html" %}
+</body>

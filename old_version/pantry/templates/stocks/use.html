@@ -1,0 +1,14 @@
+<head>
+    <link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/myform.css'/>
+</head>
+
+<body>
+    {{ stock }}
+    <form action='/stocks/use/{{ stock.id }}/' method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' value='Apply' name='use' />
+        <input type='submit' value='Remove' name='remove' />
+    </form>
+    {% include 'stocks/footer.html' %}
+</body>

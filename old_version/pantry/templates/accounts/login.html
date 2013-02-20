@@ -1,0 +1,8 @@
+<form action="/accounts/login/" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% include "shared/messages.html" %}

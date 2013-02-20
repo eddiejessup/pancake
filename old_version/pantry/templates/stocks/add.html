@@ -1,0 +1,14 @@
+<head>
+    <link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/myform.css'/>
+</head>
+
+<body>
+<form action="/stocks/add/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="operation" value="Add from barcode" />
+<!--    <input type="submit" name="operation" value="Add from list" />-->
+</form>
+
+{% include "stocks/footer.html" %}
+</body>

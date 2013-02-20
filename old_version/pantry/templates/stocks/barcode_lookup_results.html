@@ -1,0 +1,21 @@
+<head>
+    <link type='text/css' rel='stylesheet' href='{{ STATIC_URL }}css/myform.css'/>
+</head>
+
+<body>
+    <p>
+        <b>Lookup data:</b>
+        <ul>
+            <li>Product description: {{ results.description }}</li>
+            {% if results.size %}
+                <li>Stock size: {{ results.size }}</li>
+            {% endif %}
+        </ul>
+    </p>
+
+    <form action="/stocks/" method="get">
+        <input type="submit" value="Make product from data (stub)" />
+    </form>
+
+    {% include "stocks/footer.html" %}
+</body>

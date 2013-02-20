@@ -1,0 +1,76 @@
+Vegetables 
+romaine
+cabbage
+raw spinach
+carrots
+brussels sprouts
+peppers
+squash
+sweet potatoes
+celery
+avocado
+green beans
+peas
+asparagus
+onions
+garlic
+broccoli
+
+Fruit
+berries 
+melon
+bananas
+mangos
+grapefruit
+oranges
+grapes
+pineapple
+cranberries
+apples
+dates
+raisins
+
+Nuts
+almonds
+walnuts
+cashews
+brazil
+
+Seeds
+flax
+sunflower
+pumpkin
+sesame 
+hemp
+
+Grain 
+oats
+millet
+quinoa
+buckwheat
+spelt
+barley
+wheat
+
+Legumes
+soybeans
+chick peas
+black-eyed peas
+black beans
+pinto beans
+small white beans
+
+Fats
+hemp oil
+flax oil
+pumpkin oil
+olive oil
+
+Animal Products
+salmon
+skinless chicken breasts
+free range eggs
+yogurt
+goat’s cheese
+cottage cheese
+honey

@@ -1,0 +1,101 @@
+<head>
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/myform.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+function change_activity_fields() {
+    var act = $("#id_activity").val()
+    if (act == "F") {
+        $("#exf").hide()
+        $("#foodf").show()
+        $(".nutrient").show()
+        var prod = $("#id_product").val()
+        if (!prod) {
+            $("#prodq").hide()
+            $("#stats").show()
+            $("#desc").show()
+        } else {
+            $("#prodq").show()
+            $("#stats").hide()
+        }
+    } else if (act == "E") {
+        $("#exf").show()
+        $("#foodf").hide()
+        $(".nutrient").hide()
+        var ex = $("#id_exercise").val()
+        if (!ex) {
+            $("#exmeas").hide()
+            $("#exq").hide()
+            $("#stats").show()
+            $("#desc").show()
+        } else {
+            $("#exmeas").show()
+            $("#desc").hide()
+            var exmeas = $("#id_exercise_measure").val()
+            if (exmeas == "T" || exmeas == 'D' || exmeas =='U') {
+                $("#exq").show()
+                $("#stats").hide()
+            } else if (exmeas == "E") {
+                $("#exq").hide()
+                $("#stats").show()
+            }
+        }
+    } else {
+        alert(value)
+    }
+}
+
+$(document).ready(change_activity_fields)
+
+$(document).ready(function() {
+    $("#id_activity").change(change_activity_fields)
+    $("#id_product").change(change_activity_fields)
+    $("#id_exercise").change(change_activity_fields)
+    $("#id_exercise_measure").change(change_activity_fields)
+})
+</script>
+</head>
+
+<body>
+    <form action="/health/activity_log/add/" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>General</legend>
+            <ol>
+                <li>{{ form.user.label_tag }}{{ form.user }}</li>
+                <li>{{ form.date.label_tag }}{{ form.date }}</li>
+                <li>{{ form.activity.label_tag }}{{ form.activity }}</li>
+            </ol>
+        </fieldset>
+
+        <fieldset id="foodf">
+            <legend>Food</legend>
+            <ol>
+                <li id="prod">{{ form.product.label_tag }}{{ form.product }}</li>
+                <li id="prodq">{{ form.product_quantity.label_tag }}{{ form.product_quantity }}</li>
+            </ol>
+        </fieldset>
+
+        <fieldset id="exf">
+            <legend>Exercise</legend>
+            <ol>
+                <li id="ex">{{ form.exercise.label_tag }}{{ form.exercise }}</li>
+                <li id="exmeas">{{ form.exercise_measure.label_tag }}{{ form.exercise_measure }}</li>
+                <li id="exq">{{ form.exercise_quantity.label_tag }}{{ form.exercise_quantity }}</li>    
+            </ol>
+        </fieldset>
+
+        <fieldset id="stats">
+            <legend>Detailed</legend>
+            <ol>
+                <li id="desc">{{ form.description.label_tag }}{{ form.description }}</li>
+                <li id="energy">{{ form.energy.label_tag }}{{ form.energy }}</li>
+                <li class="nutrient">{{ form.carb.label_tag }}{{ form.carb }}</li>
+                <li class="nutrient">{{ form.fat.label_tag }}{{ form.fat }}</li>
+                <li class="nutrient">{{ form.protein.label_tag }}{{ form.protein }}</li>
+                <li class="nutrient">{{ form.salt.label_tag }}{{ form.salt }}</li>
+            </ol>
+        </fieldset>
+        <input class="submit" type="submit" value="Submit"/>
+    </form>
+</body>
+

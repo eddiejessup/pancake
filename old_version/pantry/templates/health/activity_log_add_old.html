@@ -1,0 +1,130 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+function change_activity_fields() {
+    var act = $("#id_activity").val()
+    if (act == "F") {
+        $(".food").show()
+        $(".ex").hide()
+        var prod = $("#id_product").val()
+        if (!prod) {
+            $("#desc").show()
+            $("#prodq").hide()
+        } else {
+            $("#prodq").show()
+            $("#desc").hide()
+        }
+    } else if (act == "E") {
+      $(".ex").show()
+      $(".food").hide()
+      var ex = $("#id_exercise").val()
+      if (!ex) {
+            $("#desc").show()
+          $("#exmeas").hide()
+          $("#exq").hide()     
+      } else {
+          $("#exmeas").show()
+          $("#desc").hide()
+          var exmeas = $("#id_exercise_measure").val()
+          if (exmeas == "T" || exmeas == 'D' || exmeas =='U') {
+              $("#exq").show()
+          } else if (exmeas == "E") {
+              $("#exq").hide()
+          }
+      }
+    } else {
+        alert(value)
+    }
+}
+
+function set_product_dependents() {
+    $.ajax({
+        type: "GET",
+        url: "/stocks/ajax_get_product/",
+        data: {pk: $("#id_product").val()},
+        success: function(data) {
+            var quant = $("#id_product_quantity").val()
+            if (quant) {
+                var fields = JSON.parse(data)[0]["fields"]
+                if (fields["energy"])
+                    $("#id_energy").val(fields["energy"] * quant)
+                if (fields["carb"])
+                    $("#id_carb").val(fields["carb"] * quant)
+                if (fields["fat"]) 
+                    $("#id_fat").val(fields["fat"] * quant)
+                if (fields["protein"]) 
+                    $("#id_protein").val(fields["protein"] * quant)
+                if (fields["salt"])
+                    $("#id_salt").val(fields["salt"] * quant)
+            }
+        }
+    })
+}
+
+function set_exercise_dependents() {
+    $.ajax({
+        type: "GET",
+        url: "/health/ajax_get_exercise/",
+        data: {pk: $("#id_exercise").val()},
+        success: function(data) {
+            var quant = $("#id_exercise_quantity").val()
+            if (quant) {
+                var fields = JSON.parse(data)[0]["fields"]
+                var exmeas = $("#id_exercise_measure").val()
+                if (exmeas == "T") {
+                    var coeff = fields["energy_time"]
+                } else if (exmeas == "D") {
+                    var coeff = fields["energy_distance"]
+                } else if (exmeas == "U") {
+                    var coeff = fields["energy_unit"]
+                } else {
+                    alert(exmeas)
+                }
+                $("#id_energy").val((coeff * quant) / 100.0)
+            }
+        }
+    })
+}
+
+$(document).ready(change_activity_fields)
+
+$(document).ready(function() {
+    $("#id_activity").change(change_activity_fields)
+    $("#id_product").change(change_activity_fields)
+    $("#id_exercise").change(change_activity_fields)
+    $("#id_exercise_measure").change(change_activity_fields)
+
+    $("#id_product_quantity").change(set_product_dependents)
+    $("#id_exercise_quantity").change(set_exercise_dependents)
+})
+
+</script>
+</head>
+
+<body>
+    <form action="/health/activity_log/add" method="post">
+        {% csrf_token %}
+        <p id="user">{{ form.user.label_tag }}: {{ form.user }}</p>
+        <p id="date">{{ form.date.label_tag }}: {{ form.date }}</p>
+
+        <p id="activity">{{ form.activity.label_tag }}: {{ form.activity }}</p>
+
+        <p id="prod" class="food">{{ form.product.label_tag }}: {{ form.product }}</p>
+        <p id="prodq" class="food">{{ form.product_quantity.label_tag }}: {{ form.product_quantity }}</p>
+
+        <p id="ex" class="ex">{{ form.exercise.label_tag }}: {{ form.exercise }}</p>
+        <p id="exmeas" class="ex">{{ form.exercise_measure.label_tag }}: {{ form.exercise_measure }}</p>
+        <p id="exq" class="ex">{{ form.exercise_quantity.label_tag }}: {{ form.exercise_quantity }}</p>    
+
+        <p id="energy">{{ form.energy.label_tag }}: {{ form.energy }}</p>
+        <p id="carb" class="food">{{ form.carb.label_tag }}: {{ form.carb }}</p>
+        <p id="fat" class="food">{{ form.fat.label_tag }}: {{ form.fat }}</p>
+        <p id="protein" class="food">{{ form.protein.label_tag }}: {{ form.protein }}</p>
+        <p id="salt" class="food">{{ form.salt.label_tag }}: {{ form.salt }}</p>
+
+        <p id="desc">{{ form.description.label_tag }}: {{ form.description }}</p>
+
+        <input type="submit" value="Submit"/>
+    </form>
+</body>
