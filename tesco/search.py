@@ -3,7 +3,6 @@ import re
 import httplib
 import urllib
 import json
-import numpy as np
 
 class TescoSearcher(object):
     UNWANTED_FIELDS = (
@@ -92,3 +91,6 @@ class TescoSearcher(object):
             results = self.get_response(args)['Products'][0]
             results = self.filter(results)
             return results
+
+def single_search(query):
+    return TescoSearcher().search(query)
