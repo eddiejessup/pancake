@@ -1,5 +1,5 @@
-from __future__ import print_function
-import httplib, urllib
+
+import http.client, urllib.request, urllib.parse, urllib.error
 
 # Old deets
 #HOST_SECURE = 'secure.techfortesco.com' # Seems to be dead (returns 900 error)
@@ -56,9 +56,9 @@ elif COMMAND == 'PRODUCTSEARCH':
     args += [('sessionkey', SESSION_KEY), ('page', PAGE),
              ('searchtext', SEARCHTEXT), ('extendedinfo', EXTENDEDINFO)]
 
-path = '/' + API_PATH + '?' + urllib.urlencode(args)
+path = '/' + API_PATH + '?' + urllib.parse.urlencode(args)
 #print(path)
-conn = httplib.HTTPSConnection(HOST)
+conn = http.client.HTTPSConnection(HOST)
 conn.request('GET', path)
 results = conn.getresponse().read()
 #print(results)

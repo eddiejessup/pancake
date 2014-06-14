@@ -1,7 +1,7 @@
-from __future__ import print_function
+
 import re
-import httplib
-import urllib
+import http.client
+import urllib.request, urllib.parse, urllib.error
 import json
 
 class TescoSearcher(object):
@@ -44,7 +44,7 @@ class TescoSearcher(object):
             'developerkey': self.DEV_KEY,
             'applicationkey': self.APP_KEY,
         }
-        self.conn =  httplib.HTTPSConnection(self.HOST)
+        self.conn =  http.client.HTTPSConnection(self.HOST)
         self.get_path_base()
         self.login()
 
@@ -59,10 +59,10 @@ class TescoSearcher(object):
         self.get_path_base()
 
     def get_path_base(self):
-        self.path_base = '/%s?%s' % (self.API_PATH, urllib.urlencode(self.args_base))
+        self.path_base = '/%s?%s' % (self.API_PATH, urllib.parse.urlencode(self.args_base))
 
     def get_response(self, args):
-        self.conn.request('GET', '%s&%s' % (self.path_base, urllib.urlencode(args)))
+        self.conn.request('GET', '%s&%s' % (self.path_base, urllib.parse.urlencode(args)))
         return json.loads(self.conn.getresponse().read())
 
     def filter(self, res):

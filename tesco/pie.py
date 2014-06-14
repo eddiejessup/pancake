@@ -1,10 +1,10 @@
 import re
 import pylab as pp
-import search
-from base import *
+from . import search
+from .base import *
 
 def pretty(d, indent=1):
-   for key, value in d.iteritems():
+   for key, value in d.items():
       print('  ' * indent + str(key))
       if isinstance(value, dict):
          pretty(value, indent + 1)

@@ -100,12 +100,12 @@ def lookup(request, barcode):
 def use(request, pk):
     stock = get_object_or_404(Stock, pk=pk)
     if request.method == 'POST':
-        if 'remove' in request.POST.keys():
+        if 'remove' in list(request.POST.keys()):
             stock.remove()
             messages.info(request, 'Stock finished!')
             form = UseStockForm()
             return HttpResponseRedirect(reverse('home'))
-        elif 'use' in request.POST.keys():
+        elif 'use' in list(request.POST.keys()):
             form = UseStockForm(request.POST)
             if form.is_valid():
                 measure = form.cleaned_data['measure']

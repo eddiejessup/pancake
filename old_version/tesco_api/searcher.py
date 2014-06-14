@@ -1,6 +1,6 @@
-from __future__ import print_function
-import httplib
-import urllib
+
+import http.client
+import urllib.request, urllib.parse, urllib.error
 import json
 import re
 
@@ -98,7 +98,7 @@ def parse_quantity_string(s, units):
     raise NoMatch
 
 def get_conn():
-    return httplib.HTTPSConnection(HOST)
+    return http.client.HTTPSConnection(HOST)
 
 def get_session_key(conn=None):
     args = [
@@ -109,7 +109,7 @@ def get_session_key(conn=None):
         ('password', PASSWORD),
     ]
     if conn is None: conn = get_conn()
-    conn.request('GET', '/' + API_PATH + '?' + urllib.urlencode(args))
+    conn.request('GET', '/' + API_PATH + '?' + urllib.parse.urlencode(args))
     return json.loads(conn.getresponse().read())['SessionKey']
 
 def barcode_to_prodpack(barcode, conn=None, session_key=None):
@@ -122,12 +122,12 @@ def barcode_to_prodpack(barcode, conn=None, session_key=None):
     if session_key is None: session_key = get_session_key(conn)
 
     args.append(('sessionkey', session_key))
-    conn.request('GET', '/' + API_PATH + '?' + urllib.urlencode(args))
+    conn.request('GET', '/' + API_PATH + '?' + urllib.parse.urlencode(args))
     results = json.loads(conn.getresponse().read())
     if results['TotalProductCount'] != 1:
         raise Exception('Found %i results' % results['TotalProductCount'])
     args.append(('extendedinfo', 'Y'))
-    conn.request('GET', '/' + API_PATH + '?' + urllib.urlencode(args))
+    conn.request('GET', '/' + API_PATH + '?' + urllib.parse.urlencode(args))
     return json.loads(conn.getresponse().read())['Products'][0]
 
 def print_prodpack(prodpack):

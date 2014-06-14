@@ -52,7 +52,7 @@ def product_update(request, pk=None):
         else:
             formset = FormSet()
     else:
-        if 'initial_product_fields' in request.session.keys():
+        if 'initial_product_fields' in list(request.session.keys()):
             product_initial = request.session['initial_product_fields']['product']
             package_initial = request.session['initial_product_fields']['package']
         else:

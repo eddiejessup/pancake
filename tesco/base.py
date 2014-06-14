@@ -14,7 +14,7 @@ class Quantity(object):
         self.us_conv = {}
 
     def add_units(self, us_conv):
-        self.us = us_conv.keys()
+        self.us = list(us_conv.keys())
         self.us_conv = us_conv
 
     def get_amount(self, s):
